@@ -93,6 +93,32 @@ body{
 .hidden{
     display:none;
 }
+
+/* COMMENTS */
+.comments-box{
+    margin-top:10px;
+    padding:10px;
+    background:#1e293b;
+    border-radius:10px;
+}
+
+.comments-box input{
+    width:45%;
+    padding:5px;
+    margin:3px;
+}
+
+.comments-box button{
+    padding:5px 10px;
+    background:#22c55e;
+    border:none;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+.comments-box ul{
+    padding-right:15px;
+}
 </style>
 </head>
 
@@ -102,96 +128,118 @@ body{
 
 <!-- CALENDAR -->
 <div class="calendar">
-
     <div class="day active" onclick="show('d1',event)">30/4</div>
     <div class="day" onclick="show('d2',event)">1/5</div>
     <div class="day" onclick="show('d3',event)">2/5</div>
     <div class="day" onclick="show('d4',event)">3/5</div>
     <div class="day" onclick="show('d5',event)">4/5</div>
     <div class="day" onclick="show('d6',event)">5/5</div>
-
 </div>
 
 <div class="container">
 
-<!-- 30/4 -->
+<!-- DAY 1 -->
 <div id="d1">
     <div class="match">
         <div class="top"><span>Premier League</span><span>7:00 PM</span></div>
         <div class="teams"><span>Liverpool</span><span class="score">VS</span><span>Chelsea</span></div>
+
+        <div class="comments-box">
+            <input class="name" placeholder="اسمك">
+            <input class="text" placeholder="تعليق...">
+            <button onclick="addComment(this)">إرسال</button>
+            <ul class="list"></ul>
+        </div>
     </div>
 </div>
 
-<!-- 1/5 -->
+<!-- DAY 2 -->
 <div id="d2" class="hidden">
     <div class="match">
         <div class="top"><span>EL dawry el masry</span><span>8:00 PM</span></div>
         <div class="teams"><span>Ahly</span><span class="score">VS</span><span>Zamalek</span></div>
+
+        <div class="comments-box">
+            <input class="name" placeholder="اسمك">
+            <input class="text" placeholder="تعليق...">
+            <button onclick="addComment(this)">إرسال</button>
+            <ul class="list"></ul>
+        </div>
     </div>
 </div>
 
-<!-- 2/5 -->
+<!-- DAY 3 -->
 <div id="d3" class="hidden">
     <div class="match">
-        <div class="top"><span>La liga</span><span>10:00 PM</span></div>
-        <div class="teams"><span>Barca</span><span class="score">VS</span><span>Osasouna</span></div>
+        <div class="top"><span>La Liga</span><span>10:00 PM</span></div>
+        <div class="teams"><span>Barca</span><span class="score">VS</span><span>Osasuna</span></div>
+
+        <div class="comments-box">
+            <input class="name" placeholder="اسمك">
+            <input class="text" placeholder="تعليق...">
+            <button onclick="addComment(this)">إرسال</button>
+            <ul class="list"></ul>
+        </div>
     </div>
 </div>
 
-<!-- 3/5 -->
+<!-- DAY 4 -->
 <div id="d4" class="hidden">
+
     <div class="match">
-        <div class="top"><span>La liga</span><span>10:00 PM</span></div>
-        <div class="teams"><span>Real madrid</span><span class="score">VS</span><span>Espanyol</span></div>
+        <div class="top"><span>La Liga</span><span>10:00 PM</span></div>
+        <div class="teams"><span>Real Madrid</span><span class="score">VS</span><span>Espanyol</span></div>
+
+        <div class="comments-box">
+            <input class="name" placeholder="اسمك">
+            <input class="text" placeholder="تعليق...">
+            <button onclick="addComment(this)">إرسال</button>
+            <ul class="list"></ul>
+        </div>
     </div>
-    <div id="d4" class="hidden">
+
     <div class="match">
-        <div class="top"><span>Premier league</span><span>5:30 PM</span></div>
-        <div class="teams"><span>Liverpool</span><span class="score">VS</span><span>Man. united</span></div>
+        <div class="top"><span>Premier League</span><span>5:30 PM</span></div>
+        <div class="teams"><span>Liverpool</span><span class="score">VS</span><span>Man United</span></div>
+
+        <div class="comments-box">
+            <input class="name" placeholder="اسمك">
+            <input class="text" placeholder="تعليق...">
+            <button onclick="addComment(this)">إرسال</button>
+            <ul class="list"></ul>
+        </div>
     </div>
+
 </div>
-<!-- 4/5 -->
+
+<!-- DAY 5 -->
 <div id="d5" class="hidden">
     <div class="match">
-        <div class="top">
-            <span>Premier League</span>
-            <span>10:00 PM</span>
-        </div>
-        <div class="teams">
-            <span>Man City</span>
-            <span class="score">VS</span>
-            <span>Everton</span>
+        <div class="top"><span>Premier League</span><span>10:00 PM</span></div>
+        <div class="teams"><span>Man City</span><span class="score">VS</span><span>Everton</span></div>
+
+        <div class="comments-box">
+            <input class="name" placeholder="اسمك">
+            <input class="text" placeholder="تعليق...">
+            <button onclick="addComment(this)">إرسال</button>
+            <ul class="list"></ul>
         </div>
     </div>
 </div>
 
-<!-- 5/5 -->
+<!-- DAY 6 -->
 <div id="d6" class="hidden">
-
     <div class="match">
-        <div class="top">
-            <span>Al Masry League</span>
-            <span>8:00 PM</span>
-        </div>
-        <div class="teams">
-            <span>Ahly</span>
-            <span class="score">VS</span>
-            <span>Enppi</span>
+        <div class="top"><span>Al Masry League</span><span>8:00 PM</span></div>
+        <div class="teams"><span>Ahly</span><span class="score">VS</span><span>Enppi</span></div>
+
+        <div class="comments-box">
+            <input class="name" placeholder="اسمك">
+            <input class="text" placeholder="تعليق...">
+            <button onclick="addComment(this)">إرسال</button>
+            <ul class="list"></ul>
         </div>
     </div>
-
-    <div class="match">
-        <div class="top">
-            <span>Champions League</span>
-            <span>10:00 PM</span>
-        </div>
-        <div class="teams">
-            <span>Atletico</span>
-            <span class="score">VS</span>
-            <span>Arsenal</span>
-        </div>
-    </div>
-
 </div>
 
 </div>
@@ -210,6 +258,41 @@ function show(id,e){
     });
 
     e.target.classList.add("active");
+}
+
+// حفظ الاسم
+document.addEventListener("input", function(e){
+    if(e.target.classList.contains("name")){
+        localStorage.setItem("username", e.target.value);
+    }
+});
+
+// تحميل الاسم
+window.onload = function(){
+    document.querySelectorAll(".name").forEach(i=>{
+        i.value = localStorage.getItem("username") || "";
+    });
+};
+
+// إضافة تعليق
+function addComment(btn){
+
+    let box = btn.parentElement;
+    let name = box.querySelector(".name").value;
+    let text = box.querySelector(".text").value;
+    let list = box.querySelector(".list");
+
+    if(name === "" || text === ""){
+        alert("اكتب الاسم والتعليق");
+        return;
+    }
+
+    let li = document.createElement("li");
+    li.innerHTML = "<b>" + name + ":</b> " + text;
+
+    list.appendChild(li);
+
+    box.querySelector(".text").value = "";
 }
 </script>
 
