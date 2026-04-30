@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.step { display: none; }
+.step.active { display: block; }
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 12px;
+    border: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 12px;
+    border: none;
+    background: #22c55e;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.progress {
+    height: 6px;
+    background: #1e293b;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #22c55e;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.pass-box {
+    position: relative;
+}
+
+.pass-box span {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.loading {
+    display: none;
+    margin-top: 20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- 🔊 صوت -->
+<audio id="clickSound" src="https://www.soundjay.com/buttons/button-16.mp3"></audio>
+
+<div class="container">
+
+    <div class="progress">
+        <div class="progress-bar" id="progress"></div>
+    </div>
+
+    <!-- Email -->
+    <div class="step active">
+        <h2>اكتب الإيميل 📧</h2>
+        <input type="email" id="email">
+        <div class="error"></div>
+        <button onclick="next()">Next</button>
+    </div>
+
+    <!-- Phone -->
+    <div class="step">
+        <h2>رقم التليفون 📱</h2>
+        <input type="tel" id="phone">
+        <div class="error"></div>
+        <button onclick="next()">Next</button>
+    </div>
+
+    <!-- Username -->
+    <div class="step">
+        <h2>اسم المستخدم 👤</h2>
+        <input type="text" id="username">
+        <div class="error"></div>
+        <button onclick="next()">Next</button>
+    </div>
+
+    <!-- Password -->
+    <div class="step">
+        <h2>الباسورد 🔒</h2>
+
+        <div class="pass-box">
+            <input type="password" id="password">
+            <span onclick="togglePassword()">👁️</span>
+        </div>
+
+        <div class="error"></div>
+
+        <button onclick="next()">Next</button>
+    </div>
+
+    <!-- Finish -->
+    <div class="step">
+        <h2>تم إنشاء الحساب 🎉</h2>
+        <button onclick="finish()">Finish</button>
+        <div class="loading" id="loading">جارٍ التحويل... ⏳</div>
+    </div>
+
+</div>
+
+<script>
+let current = 0;
+let steps = document.querySelectorAll(".step");
+
+function playSound() {
+    document.getElementById("clickSound").play();
+}
+
+function clearErrors() {
+    document.querySelectorAll(".error").forEach(e => e.innerText = "");
+}
+
+function showError(msg) {
+    let err = steps[current].querySelector(".error");
+    if (err) err.innerText = msg;
+}
+
+function next() {
+    clearErrors();
+
+    let input = steps[current].querySelector("input");
+
+    if (input) {
+
+        if (input.value.trim() === "") {
+            showError("املى البيانات");
+            return;
+        }
+
+        if (input.id === "email" && !input.value.includes("@")) {
+            showError("ايميل غير صحيح");
+            return;
+        }
+
+        if (input.id === "phone" && input.value.length < 10) {
+            showError("رقم غير صحيح");
+            return;
+        }
+
+        if (input.id === "password") {
+            if (input.value.length < 6) {
+                showError("الباسورد لازم 6 حروف");
+                return;
+            }
+        }
+    }
+
+    playSound();
+
+    if (current < steps.length - 1) {
+        steps[current].classList.remove("active");
+        current++;
+        steps[current].classList.add("active");
+        updateProgress();
+    }
+}
+
+function updateProgress() {
+    let percent = (current / (steps.length - 1)) * 100;
+    document.getElementById("progress").style.width = percent + "%";
+}
+
+function togglePassword() {
+    let pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+
+// تشفير بسيط
+function encrypt(text) {
+    return btoa(text);
+}
+
+function finish() {
+    let user = {
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        username: document.getElementById("username").value,
+        password: encrypt(document.getElementById("password").value)
+    };
+
+    localStorage.setItem("user", JSON.stringify(user));
+
+    document.getElementById("loading").style.display = "block";
+
+    setTimeout(() => {
+        window.location.href = "";
+    }, 2000);
+}
+</script>
+
+</body>
+</html>

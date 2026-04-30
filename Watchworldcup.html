@@ -1,0 +1,243 @@
+
+
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football 276 Plans</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg,#e2e8f0,#f8fafc);
+}
+
+.header {
+  background: white;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 50px 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  width: 280px;
+  min-height: 450px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.best {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background: gold;
+  color: black;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.features {
+  text-align: right;
+  margin: 20px 0;
+  line-height: 2;
+  font-size: 15px;
+}
+
+.features span {
+  display: block;
+}
+
+.ok { color: green; }
+.no { color: red; }
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 13px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.premium {
+  border: 2px solid gold;
+}
+
+.watch {
+  margin: 30px auto;
+  text-align: center;
+}
+
+.watch button {
+  background: #16a34a;
+  padding: 14px 30px;
+}
+
+.watch button:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+@media(max-width:900px){
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">Football 276 - Subscription Plans</div>
+
+<div class="container">
+
+  <div class="card">
+    <div>
+      <div class="title">Noob</div>
+      <div class="price">مجاني</div>
+
+      <div class="features">
+        <span class="no">❌ لا يوجد عرض مباريات</span>
+        <span class="no">❌ جودة ضعيفة</span>
+        <span class="ok">✔ اختيار فريق للتشجيع</span>
+        <span>🇪🇬 مصر</span>
+        <span>🇯🇴 الأردن</span>
+        <span>🇸🇦 السعودية</span>
+      </div>
+    </div>
+
+    <button onclick="selectPlan('noob')">اختيار الخطة</button>
+  </div>
+
+  <div class="card">
+    <div class="best">BEST</div>
+
+    <div>
+      <div class="title">Pro</div>
+      <div style="color:red;font-weight:bold;">خصم 50%</div>
+      <div class="price">20 جنيه</div>
+
+      <div class="features">
+        <span class="ok">✔ جودة 4K</span>
+        <span class="ok">✔ مشاهدة المباريات</span>
+      </div>
+    </div>
+
+    <button onclick="selectPlan('pro')">اختيار الخطة</button>
+  </div>
+
+  <div class="card premium">
+    <div class="best">⭐ الأفضل</div>
+
+    <div>
+      <div class="title">Premium</div>
+      <div class="price">60 جنيه</div>
+
+      <div class="features">
+        <span class="ok">✔ جودة HD</span>
+        <span class="ok">✔ تفاصيل كاملة</span>
+        <span class="ok">✔ وصول أسرع</span>
+      </div>
+    </div>
+
+    <button onclick="selectPlan('premium')">اختيار الخطة</button>
+  </div>
+
+</div>
+
+<div class="watch">
+  <button id="watchBtn" onclick="watchMatch()" disabled>مشاهدة المباراة</button>
+</div>
+
+<script>
+function selectPlan(plan) {
+  localStorage.setItem('selectedPlan', plan);
+
+  let links = {
+    noob: '',
+    pro: '',
+    premium: ''
+  };
+
+  updateAccess();
+
+  if (links[plan]) {
+    window.location.href = links[plan];
+  }
+}
+
+function updateAccess() {
+  let plan = localStorage.getItem('selectedPlan') || 'noob';
+  let watchBtn = document.getElementById('watchBtn');
+
+  if(plan === 'noob') {
+    watchBtn.disabled = true;
+  } else {
+    watchBtn.disabled = false;
+  }
+}
+
+function watchMatch() {
+  let plan = localStorage.getItem('selectedPlan');
+
+  if(plan === 'pro' || plan === 'premium') {
+    window.location.href = 'watch.html';
+  }
+}
+
+updateAccess();
+</script>
+
+</body>
+</html>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9792136816198268"
+     crossorigin="anonymous"></script>
+```
+

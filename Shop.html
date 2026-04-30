@@ -1,0 +1,239 @@
+<div id="app"></div>
+
+<script>
+document.getElementById("app").innerHTML = `
+
+<style>
+body {
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  margin:0;
+}
+
+.header {
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  background:#020617;
+}
+
+.points { color:#22c55e; }
+
+.nav {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:10px;
+}
+
+button {
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+}
+
+button.buy-btn {
+  background:#22c55e;
+  font-weight:bold;
+  margin-top:5px;
+}
+button.buy-btn:hover {
+  background:#16a34a;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:10px;
+}
+
+.card {
+  background:#1e293b;
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.player-img {
+  width:100%;
+  border-radius:10px;
+}
+
+.rarity {
+  font-weight:bold;
+  padding:2px 6px;
+  border-radius:4px;
+  color:white;
+  display:inline-block;
+  margin-top:5px;
+}
+.rarity.Common {background:#6b7280;}  
+.rarity.Rare {background:#3b82f6;}    
+.rarity.Epic {background:#8b5cf6;}    
+.rarity.OG {background:#FFD700; color:black;} 
+</style>
+
+<div class="header">
+  <h3>Football 276 FIFA Pack</h3>
+  <div class="points">💰 <span id="points">0</span></div>
+</div>
+
+<div class="nav">
+  <button onclick="showShop()">Shop</button>
+  <button onclick="showInventory()">Inventory</button>
+  <button onclick="showPacks()">Packs</button>
+</div>
+
+<div id="shop" class="grid"></div>
+<div id="inventory" class="grid" style="display:none;"></div>
+<div id="packs" class="grid" style="display:none;"></div>
+`;
+
+// 💰 النقاط
+let points = Number(localStorage.getItem("points")) || 1800;
+document.getElementById("points").innerText = points;
+
+// 📊 دخل كل نوع
+const incomeRates = {
+  "OG": 10,
+  "Epic": 5,
+  "Rare": 4,
+  "Common": 2
+};
+
+// ⚽ اللاعبين
+let players = [
+{name:"Messi",price:100,rarity:"OG",img:"https://i.imgur.com/5hQOyzK.png"}, {name:"Ronaldo",price:100,rarity:"OG",img:"https://i.imgur.com/lkD9Z9F.png"}, {name:"Mbappe",price:50,rarity:"Epic",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Yamal",price:50,rarity:"Epic",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Haaland",price:45,rarity:"Rare",img:"https://i.imgur.com/wG3YTXG.png"}, {name:"Neymar",price:40,rarity:"Rare",img:"https://i.imgur.com/fZ08Zok.png"}, {name:"Marmoush",price:35,rarity:"Epic",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Salah",price:40,rarity:"Rare",img:"https://i.imgur.com/1t6hGhH.png"}, {name:"Benzema",price:38,rarity:"Common",img:"https://i.imgur.com/3ZLZ8kh.png"}, {name:"Kane",price:38,rarity:"Common",img:"https://i.imgur.com/7GqJslV.png"}, {name:"Vinicius",price:35,rarity:"Common",img:"https://i.imgur.com/WXrKXrL.png"}, {name:"De Bruyne",price:35,rarity:"Rare",img:"https://i.imgur.com/e3sY5fT.png"}, {name:"Modric",price:30,rarity:"Common",img:"https://i.imgur.com/RP3J4mU.png"}, {name:"Kroos",price:30,rarity:"Common",img:"https://i.imgur.com/2e5Z5l1.png"}, {name:"Pedri",price:28,rarity:"Common",img:"https://i.imgur.com/qM3DxWn.png"}, {name:"Gavi",price:28,rarity:"Common",img:"https://i.imgur.com/bQYr5mR.png"}, {name:"Foden",price:28,rarity:"Common",img:"https://i.imgur.com/xJp5tG6.png"}, {name:"Saka",price:28,rarity:"Common",img:"https://i.imgur.com/1tHj4Er.png"}, {name:"Son",price:32,rarity:"Rare",img:"https://i.imgur.com/3f5gGgS.png"}, {name:"Lewandowski",price:42,rarity:"Epic",img:"https://i.imgur.com/6Z7hJkR.png"}, {name:"Griezmann",price:34,rarity:"Rare",img:"https://i.imgur.com/1iI6f2F.png"}, {name:"Rashford",price:33,rarity:"Rare",img:"https://i.imgur.com/2IuYh4t.png"}, {name:"Bruno",price:32,rarity:"Rare",img:"https://i.imgur.com/7WUpvWg.png"}, {name:"Dybala",price:30,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Alvarez",price:25,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Shenawy",price:10,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"shobir",price:35,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Hegazi",price:5,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Fatoh",price:5,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Hany",price:5,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Omar kamal",price:10,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Ayman",price:2,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Afsha",price:5,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Trezeguet",price:20,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Zizo",price:5,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Kahraba",price:3,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Mostafa mohamed",price:7,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Taher",price:10,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Casemiro",price:31,rarity:"Common",img:"https://i.imgur.com/g7CFeBQ.png"}, {name:"Rodri",price:30,rarity:"Common",img:"https://i.imgur.com/3DRI1zD.png"}, {name:"Hakimi",price:29,rarity:"Rare",img:"https://i.imgur.com/4DxYlS6.png"}, {name:"Trent",price:29,rarity:"Common",img:"https://i.imgur.com/5Qd5tQ6.png"}, {name:"Walker",price:28,rarity:"Common",img:"https://i.imgur.com/8w3vKfP.png"}, {name:"Van Dijk",price:40,rarity:"Epic",img:"https://i.imgur.com/5IY7b2g.png"}, {name:"Rudiger",price:35,rarity:"Rare",img:"https://i.imgur.com/2O2zK8q.png"}, {name:"Alisson",price:30,rarity:"Common",img:"https://i.imgur.com/X3ZJv2F.png"}, {name:"Courtois",price:30,rarity:"Rare",img:"https://i.imgur.com/QlF5G7s.png"}, {name:"Oblak",price:15,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Neuer",price:35,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Ramos",price:35,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Cancelo",price:20,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Arnold",price:15,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Pekie",price:10,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Pogba",price:5,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Wirtz",price:10,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Kross",price:50,rarity:"Epic",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Vini",price:50,rarity:"Epic",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Foden",price:30,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Maherz",price:15,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Sancho",price:5,rarity:"Common",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Real madrid",price:100,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Barca",price:70,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Liverpool",price:80,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Man.city",price:75,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Paris",price:65,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Ateltico madrid",price:60,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"World cup",price:230,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, 
+{name:"Champions League",price:230,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"English League",price:200,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Egyptian League",price:50,rarity:"Rare",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"spanish League",price:199,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"}, {name:"Buy Owner(Andy) 😎🤣",price:1800,rarity:"OG",img:"https://i.imgur.com/YXcD3bD.png"},
+];
+
+// 🎒 الانفنتوري
+let owned = JSON.parse(localStorage.getItem("owned")) || [];
+
+// 💰 فلوس متجمعة
+let pendingCoins = JSON.parse(localStorage.getItem("pendingCoins")) || {};
+
+let shop = document.getElementById("shop");
+let inventory = document.getElementById("inventory");
+let packs = document.getElementById("packs");
+
+function hideAll(){ 
+  shop.style.display="none"; 
+  inventory.style.display="none"; 
+  packs.style.display="none"; 
+}
+
+// 🛒 الشوب
+function showShop(){
+  hideAll();
+  let html="";
+  players.forEach(p=>{
+    html+=`
+    <div class="card">
+      <img src="${p.img}" class="player-img"/>
+      <h4>${p.name}</h4>
+      <p>💰 ${p.price}</p>
+      <span class="rarity ${p.rarity}">${p.rarity}</span><br>
+      <button class="buy-btn" onclick="buy('${p.name}',${p.price})">
+        ${owned.includes(p.name)?"Owned":"Buy"}
+      </button>
+    </div>`;
+  });
+  shop.style.display="grid";
+  shop.innerHTML=html;
+}
+
+// 💸 شراء
+function buy(name,price){
+  if(owned.includes(name)){ alert("معاك اللاعب ده!"); return; }
+
+  if(points>=price){
+    points-=price;
+    owned.push(name);
+    pendingCoins[name]=0;
+
+    localStorage.setItem("points",points);
+    localStorage.setItem("owned",JSON.stringify(owned));
+    localStorage.setItem("pendingCoins",JSON.stringify(pendingCoins));
+
+    document.getElementById("points").innerText=points;
+    alert("🔥 اشتريت " + name);
+
+    showShop();
+  } else { alert("نقاطك قليلة ❌"); }
+}
+
+// 🎒 الانفنتوري
+function showInventory(){
+  hideAll();
+  let html="";
+
+  if(owned.length===0){
+    html="<h3>مفيش لاعيبة 😢</h3>";
+  } else{
+    owned.forEach(name=>{
+      let p=players.find(pl=>pl.name===name);
+      let collected = pendingCoins[name] || 0;
+
+      html+=`
+      <div class="card">
+        <img src="${p.img}" class="player-img"/>
+        <h4>${p.name}</h4>
+        <span class="rarity ${p.rarity}">${p.rarity}</span>
+        <p>💸 متجمع: ${collected}</p>
+        <button class="buy-btn" onclick="claim('${p.name}')">Claim</button>
+      </div>`;
+    });
+  }
+
+  inventory.style.display="grid";
+  inventory.innerHTML=html;
+}
+
+// 💰 Claim
+function claim(name){
+  let amount = pendingCoins[name] || 0;
+
+  if(amount<=0){
+    alert("مفيش فلوس 😢");
+    return;
+  }
+
+  points += amount;
+  pendingCoins[name] = 0;
+
+  localStorage.setItem("points",points);
+  localStorage.setItem("pendingCoins",JSON.stringify(pendingCoins));
+
+  document.getElementById("points").innerText=points;
+
+  alert("🔥 خدت " + amount);
+
+  showInventory();
+}
+
+// ⏱️ سيستم الربح كل 3 ثواني
+setInterval(()=>{
+  owned.forEach(name=>{
+    let player = players.find(p=>p.name===name);
+    if(!player) return;
+
+    let income = incomeRates[player.rarity];
+
+    pendingCoins[name] += income;
+  });
+
+  localStorage.setItem("pendingCoins",JSON.stringify(pendingCoins));
+
+  if(inventory.style.display==="grid"){
+    showInventory();
+  }
+
+},3000);
+
+// 🚀 تشغيل
+showShop();
+</script>

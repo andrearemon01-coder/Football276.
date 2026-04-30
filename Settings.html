@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Settings</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f5f5f5;
+  transition: 0.3s;
+}
+
+.dark {
+  background: #121212;
+  color: white;
+}
+
+.container { padding: 20px; }
+
+.card {
+  background: white;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dark .card { background: #1e1e1e; }
+
+button, select, input {
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: block;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>⚙️ Pro Settings</h2>
+
+  <!-- Login -->
+  <div class="card">
+    <button onclick="openModal()">🔐 Login / Sign Up</button>
+    <button onclick="logout()">🚪 Logout</button>
+    <p id="userText"></p>
+  </div>
+
+  <!-- Profile Image (بعد التسجيل) -->
+  <div class="card" id="uploadBox" style="display:none;">
+    🧑‍🎨 صورة البروفايل
+    <input type="file" onchange="saveImage(event)">
+    <img id="imgPreview">
+  </div>
+
+  <!-- Dark Mode -->
+  <div class="card">
+    🌙 Dark Mode
+    <input type="checkbox" onchange="toggleDark(this)">
+  </div>
+
+  <!-- Team -->
+  <div class="card">
+    ⚽ الفريق
+    <select onchange="saveTeam(this.value)">
+      <option>الأهلي</option>
+      <option>الزمالك</option>
+      <option>برشلونة</option>
+      <option>ريال مدريد</option>
+      <option>ر</option>ي<div>
+        
+
+  <!-- Language -->
+  <div class="card">
+    🌐 اللغة
+    <select onchange="saveLang(this.value)">
+      <option value="ar">العربية</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+
+  <!-- Font -->
+  <div class="card">
+    🔤 حجم الخط
+    <select onchange="changeFont(this.value)">
+      <option value="20">صغير</option>
+      <option value="30">متوسط</option>
+      <option value="40">كبير</option>
+    </select>
+  </div>
+
+  <!-- Color -->
+  <div class="card">
+    🎨 اللون
+    <input type="color" onchange="changeColor(this.value)">
+  </div>
+
+  <!-- Notifications -->
+  <div class="card">
+    🔔 إشعارات
+    <input type="checkbox" onchange="saveNotif(this)">
+  </div>
+
+  <!-- Sound -->
+  <div class="card">
+    🔊 صوت
+    <input type="checkbox" onchange="saveSound(this)">
+  </div>
+
+  <!-- Reset -->
+  <div class="card">
+    🗑️
+    <button onclick="resetAll()">مسح كل البيانات</button>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div id="modal" style="display:none;position:fixed;top:0;width:100%;height:100%;background:#0008;justify-content:center;align-items:center;">
+  <div style="background:white;padding:20px;border-radius:12px;">
+    <h3>Sign Up / Login</h3>
+    <input id="user" placeholder="username"><br>
+    <input id="pass" type="password" placeholder="password"><br>
+    <button onclick="saveUser()">Submit</button>
+  </div>
+</div>
+
+<script>
+// Login System
+function openModal(){ modal.style.display='flex'; }
+
+function saveUser(){
+  let u = user.value.trim();
+  let p = pass.value.trim();
+
+  if(!u || !p) return alert("اكتب البيانات ❌");
+
+  localStorage.setItem('user', u);
+  localStorage.setItem('pass', p);
+  localStorage.setItem('loggedIn','true');
+
+  uploadBox.style.display = 'block'; // 👈 يظهر رفع الصورة
+
+  showUser();
+  modal.style.display='none';
+}
+
+function logout(){
+  localStorage.removeItem('loggedIn');
+  uploadBox.style.display = 'none';
+  showUser();
+}
+
+function showUser(){
+  let u = localStorage.getItem('user');
+  let l = localStorage.getItem('loggedIn');
+
+  if(l === 'true'){
+    userText.innerText = "Welcome: " + u;
+    uploadBox.style.display = 'block';
+  } else {
+    userText.innerText = "Not logged";
+  }
+}
+showUser();
+
+// Image
+function saveImage(ev){
+  let file = ev.target.files[0];
+  let reader = new FileReader();
+
+  reader.onload = function(){
+    localStorage.setItem('img', reader.result);
+    imgPreview.src = reader.result;
+  }
+
+  reader.readAsDataURL(file);
+}
+
+if(localStorage.getItem('img')){
+  imgPreview.src = localStorage.getItem('img');
+}
+
+// Dark
+function toggleDark(e){document.body.classList.toggle('dark');localStorage.setItem('dark',e.checked)}
+if(localStorage.getItem('dark')==='true')document.body.classList.add('dark');
+
+// Team
+function saveTeam(v){localStorage.setItem('team',v)}
+
+// Lang
+function saveLang(v){localStorage.setItem('lang',v)}
+
+// Font
+function changeFont(v){document.body.style.fontSize=v+'px';localStorage.setItem('font',v)}
+if(localStorage.getItem('font'))document.body.style.fontSize=localStorage.getItem('font')+'px';
+
+// Color
+function changeColor(c){document.body.style.background=c;localStorage.setItem('color',c)}
+if(localStorage.getItem('color'))document.body.style.background=localStorage.getItem('color');
+
+// Notifications
+function saveNotif(e){localStorage.setItem('notif',e.checked)}
+
+// Sound
+function saveSound(e){localStorage.setItem('sound',e.checked)}
+
+// Reset
+function resetAll(){localStorage.clear();location.reload()}
+</script>
+
+</body>
+</html>
