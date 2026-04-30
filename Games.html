@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9792136816198268"
+     crossorigin="anonymous"></script>  za
+<meta charset="UTF-8">
+<title>خمن اللاعب</title>
+
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.box {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 15px;
+  width: 80%;
+  margin: auto;
+}
+
+p {
+  font-size: 20px;
+}
+
+input {
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>⚽ خمن اللاعب من المعلومات</h2>
+
+<div class="box">
+  <p id="hint1"></p>
+  <p id="hint2"></p>
+  <p id="hint3"></p>
+</div>
+
+<input type="text" id="answer" placeholder="اكتب اسم اللاعب">
+<br>
+
+<button onclick="checkAnswer()">تحقق</button>
+
+<p id="result"></p>
+<p id="score"></p>
+
+<script>
+// 👇 20 لاعب + 3 معلومات لكل واحد
+let players = [
+  {name:"messi", hints:["أرجنتيني 🇦🇷","لعب في برشلونة","فاز بكأس العالم"]},
+  {name:"ronaldo", hints:["برتغالي 🇵🇹","لعب في ريال مدريد","هداف تاريخي"]},
+  {name:"salah", hints:["مصري 🇪🇬","يلعب في ليفربول","سريع جدًا"]},
+  {name:"neymar", hints:["برازيلي 🇧🇷","لعب في باريس","مهاري"]},
+  {name:"mbappe", hints:["فرنسي 🇫🇷","سريع جدًا","فاز بكأس العالم"]},
+  {name:"benzema", hints:["فرنسي","لعب في ريال مدريد","فاز بالكرة الذهبية"]},
+  {name:"kane", hints:["إنجليزي","مهاجم","هداف"]},
+  {name:"modric", hints:["كرواتي","وسط","فاز بالكرة الذهبية"]},
+  {name:"haaland", hints:["نرويجي","طويل","هداف قوي"]},
+  {name:"vinicius", hints:["برازيلي","جناح","يلعب في ريال مدريد"]},
+  {name:"pedri", hints:["إسباني","شاب","يلعب في برشلونة"]},
+  {name:"lewandowski", hints:["بولندي","هداف","لعب في بايرن"]},
+  {name:"griezmann", hints:["فرنسي","لعب في أتلتيكو","مهاجم"]},
+  {name:"dybala", hints:["أرجنتيني","مهاري","لعب في يوفنتوس"]},
+  {name:"son", hints:["كوري","سريع","يلعب في توتنهام"]},
+  {name:"debruyne", hints:["بلجيكي","صانع لعب","مانشستر سيتي"]},
+  {name:"bellingham", hints:["إنجليزي","شاب","ريال مدريد"]},
+  {name:"rashford", hints:["إنجليزي","مانشستر يونايتد","سريع"]},
+  {name:"sterling", hints:["إنجليزي","جناح","سريع"]},
+  {name:"suarez", hints:["أوروجواياني","مهاجم","عض اللاعبين 😂"]}
+];
+
+let current = 0;
+let score = 0;
+
+// عرض المعلومات
+function loadPlayer() {
+  hint1.innerText = players[current].hints[0];
+  hint2.innerText = players[current].hints[1];
+  hint3.innerText = players[current].hints[2];
+  answer.value = "";
+}
+
+loadPlayer();
+
+// تحقق
+function checkAnswer() {
+  let userAnswer = answer.value.toLowerCase();
+
+  if(userAnswer === players[current].name) {
+    result.innerText = "✅ صح!";
+    score++;
+  } else {
+    result.innerText = "❌ غلط! الإجابة: " + players[current].name;
+  }
+
+  current++;
+
+  if(current < players.length) {
+    setTimeout(loadPlayer, 1000);
+  } else {
+    result.innerText = "🎉 خلصت اللعبة!";
+  }
+
+  scoreText = "Score: " + score;
+  scoreDiv = document.getElementById("score");
+  scoreDiv.innerText = scoreText;
+}
+</script>
+
+</body>
+</html>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9792136816198268"
+     crossorigin="anonymous"></script>

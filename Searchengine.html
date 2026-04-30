@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search YouTube</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #422727;
+    font-family: Arial;
+}
+.h2 {
+  text-align: center;
+}
+.search-box {
+    text-align: center;
+}
+
+input {
+    width: 300px;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    outline: none;
+}
+
+button {
+    margin-top: 10px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background: red;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="اي مباراة عاوزها اكتب هنا">
+    <br>
+    <button onclick="searchYouTube()">بحث</button>
+</div>
+
+<script>
+function searchYouTube() {
+    let query = document.getElementById("searchInput").value;
+
+    if(query.trim() !== "") {
+        window.location.href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
+    }
+}
+
+// البحث لما يدوس Enter
+document.getElementById("searchInput").addEventListener("keypress", function(event) {
+    if(event.key === "Enter") {
+        searchYouTube();
+    }
+});
+</script>
+
+</body>
+</html>

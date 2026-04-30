@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football 276 - Live Matches</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0b1220;
+    color:white;
+}
+
+/* HEADER */
+.header{
+    padding:15px;
+    text-align:center;
+    background:#0f172a;
+    font-size:22px;
+    font-weight:bold;
+    border-bottom:1px solid #1e293b;
+}
+
+/* CALENDAR */
+.calendar{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    padding:10px;
+    background:#0f172a;
+    border-bottom:1px solid #1e293b;
+}
+
+.day{
+    min-width:90px;
+    padding:10px;
+    background:#1e293b;
+    border-radius:12px;
+    text-align:center;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.day:hover{
+    background:#22c55e;
+    color:black;
+}
+
+.active{
+    background:#22c55e;
+    color:black;
+}
+
+/* MATCHES */
+.container{
+    padding:15px;
+}
+
+.match{
+    background:#0f172a;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:10px;
+    border:1px solid #1e293b;
+    transition:0.3s;
+}
+
+.match:hover{
+    transform:scale(1.02);
+    border-color:#22c55e;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:#94a3b8;
+}
+
+.teams{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.score{
+    color:#22c55e;
+}
+
+.hidden{
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">⚽ Football 276 </div>
+
+<!-- CALENDAR -->
+<div class="calendar">
+
+    <div class="day active" onclick="show('d1',event)">30/4</div>
+    <div class="day" onclick="show('d2',event)">1/5</div>
+    <div class="day" onclick="show('d3',event)">2/5</div>
+    <div class="day" onclick="show('d4',event)">3/5</div>
+    <div class="day" onclick="show('d5',event)">4/5</div>
+    <div class="day" onclick="show('d6',event)">5/5</div>
+
+</div>
+
+<div class="container">
+
+<!-- 30/4 -->
+<div id="d1">
+    <div class="match">
+        <div class="top"><span>Premier League</span><span>7:00 PM</span></div>
+        <div class="teams"><span>Liverpool</span><span class="score">VS</span><span>Chelsea</span></div>
+    </div>
+</div>
+
+<!-- 1/5 -->
+<div id="d2" class="hidden">
+    <div class="match">
+        <div class="top"><span>EL dawry el masry</span><span>8:00 PM</span></div>
+        <div class="teams"><span>Ahly</span><span class="score">VS</span><span>Zamalek</span></div>
+    </div>
+</div>
+
+<!-- 2/5 -->
+<div id="d3" class="hidden">
+    <div class="match">
+        <div class="top"><span>La liga</span><span>10:00 PM</span></div>
+        <div class="teams"><span>Barca</span><span class="score">VS</span><span>Osasouna</span></div>
+    </div>
+</div>
+
+<!-- 3/5 -->
+<div id="d4" class="hidden">
+    <div class="match">
+        <div class="top"><span>La liga</span><span>10:00 PM</span></div>
+        <div class="teams"><span>Real madrid</span><span class="score">VS</span><span>Espanyol</span></div>
+    </div>
+    <div id="d4" class="hidden">
+    <div class="match">
+        <div class="top"><span>Premier league</span><span>5:30 PM</span></div>
+        <div class="teams"><span>Liverpool</span><span class="score">VS</span><span>Man. united</span></div>
+    </div>
+</div>
+<!-- 4/5 -->
+<div id="d5" class="hidden">
+    <div class="match">
+        <div class="top">
+            <span>Premier League</span>
+            <span>10:00 PM</span>
+        </div>
+        <div class="teams">
+            <span>Man City</span>
+            <span class="score">VS</span>
+            <span>Everton</span>
+        </div>
+    </div>
+</div>
+
+<!-- 5/5 -->
+<div id="d6" class="hidden">
+
+    <div class="match">
+        <div class="top">
+            <span>Al Masry League</span>
+            <span>8:00 PM</span>
+        </div>
+        <div class="teams">
+            <span>Ahly</span>
+            <span class="score">VS</span>
+            <span>Enppi</span>
+        </div>
+    </div>
+
+    <div class="match">
+        <div class="top">
+            <span>Champions League</span>
+            <span>10:00 PM</span>
+        </div>
+        <div class="teams">
+            <span>Atletico</span>
+            <span class="score">VS</span>
+            <span>Arsenal</span>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+function show(id,e){
+
+    document.querySelectorAll("[id^='d']").forEach(x=>{
+        x.classList.add("hidden");
+    });
+
+    document.getElementById(id).classList.remove("hidden");
+
+    document.querySelectorAll(".day").forEach(d=>{
+        d.classList.remove("active");
+    });
+
+    e.target.classList.add("active");
+}
+</script>
+
+</body>
+</html>

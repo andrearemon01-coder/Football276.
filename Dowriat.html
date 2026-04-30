@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football 276 Pro</title>
+
+<style>
+:root{
+    --bg:#050816;
+    --card:rgba(15,23,42,0.75);
+    --border:rgba(148,163,184,0.2);
+    --green:#22c55e;
+    --text:#e2e8f0;
+    --muted:#94a3b8;
+    --glow:0 0 20px rgba(34,197,94,0.35);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background: radial-gradient(circle at top,#0b1224,#050816);
+    color:var(--text);
+    padding-bottom:90px;
+    overflow-x:hidden;
+}
+
+/* HEADER */
+.header{
+    position:fixed;
+    top:0;
+    width:100%;
+    background:rgba(15,23,42,0.6);
+    backdrop-filter:blur(14px);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 20px;
+    border-bottom:1px solid var(--border);
+    z-index:1000;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+    color:var(--green);
+    text-shadow:var(--glow);
+}
+
+.header-links a{
+    color:var(--text);
+    text-decoration:none;
+    margin:0 10px;
+    font-size:14px;
+    transition:0.3s;
+    position:relative;
+}
+
+.header-links a::after{
+    content:'';
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    width:0;
+    height:2px;
+    background:var(--green);
+    transition:0.3s;
+}
+
+.header-links a:hover{
+    color:var(--green);
+}
+
+.header-links a:hover::after{
+    width:100%;
+}
+
+/* HERO */
+.hero{
+    height:160px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:22px;
+    color:var(--muted);
+}
+
+/* LEAGUES */
+.leagues-box{
+    background:var(--card);
+    padding:25px;
+    border-radius:20px;
+    width:90%;
+    max-width:380px;
+    margin:30px auto;
+    text-align:center;
+    border:1px solid var(--border);
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+    backdrop-filter:blur(10px);
+}
+
+.leagues-box a{
+    display:block;
+    background:rgba(30,41,59,0.6);
+    color:white;
+    text-decoration:none;
+    padding:14px;
+    margin:10px 0;
+    border-radius:14px;
+    transition:0.3s;
+    border:1px solid transparent;
+}
+
+.leagues-box a:hover{
+    background:var(--green);
+    color:black;
+    transform:scale(1.05);
+    box-shadow:var(--glow);
+}
+
+/* SECTION */
+.section{
+    padding:70px 15px;
+}
+
+.section-title{
+    text-align:center;
+    font-size:28px;
+    margin-bottom:30px;
+    color:var(--text);
+    text-shadow:0 0 10px rgba(255,255,255,0.05);
+}
+
+/* CARDS */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    transition:0.4s;
+    backdrop-filter:blur(10px);
+}
+
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+    border-color:var(--green);
+    box-shadow:var(--glow);
+}
+
+.card-icon{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:var(--muted);
+    margin-top:10px;
+}
+
+/* MATCHES */
+.matches{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.match-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    transition:0.4s;
+    backdrop-filter:blur(10px);
+}
+
+.match-card:hover{
+    transform:scale(1.03);
+    border-color:var(--green);
+    box-shadow:var(--glow);
+}
+
+.match-top{
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.teams{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:15px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.score{
+    color:var(--green);
+    font-size:22px;
+    text-shadow:var(--glow);
+}
+
+/* FOOTER */
+.footer{
+    text-align:center;
+    padding:25px;
+    color:var(--muted);
+}
+
+/* BOTTOM NAV */
+.lowerbar{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:rgba(15,23,42,0.7);
+    backdrop-filter:blur(14px);
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+    border-top:1px solid var(--border);
+}
+
+.lowerbar a{
+    color:white;
+    text-decoration:none;
+    font-size:13px;
+    transition:0.3s;
+}
+
+.lowerbar a:hover{
+    color:var(--green);
+    transform:translateY(-2px);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .header-links{display:none;}
+    .section-title{font-size:22px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="logo">⚽ Football 276 PRO</div>
+    <div class="header-links">
+        <a href="News.html">News</a>
+        <a href="Dowriat.html">Leagues</a>
+        <a href="AI.html">AI</a>
+    </div>
+</div>ذ 2 
+
+<section class="hero">
+Football 276
+</section>
+
+<div class="leagues-box">
+   <a href="englishleague.html">English League</a>
+   <a href="Spanish League.html">Spanish League</a>
+   <a href="France League.html">France League</a>
+   <a href="Allemande league.html">German League</a>
+   <a href="Italienleague.html">Italian League</a>
+   <a href="Egyptienleague.html">Egyptian League</a>
+   <a href="Saudileague.html">Saudi League</a>
+   <a href="Championsleague.html">Champions League</a>
+</div>
+
+<section class="section">
+    <h2 class="section-title">⚡ Features</h2>
+
+    <div class="cards">
+        <div class="card">
+            <div class="card-icon">🏆</div>
+            <h3>Leagues</h3>
+            <p>All standings updated in real-time.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📰</div>
+            <h3>News</h3>
+            <p>Latest football updates instantly.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🤖</div>
+            <h3>AI</h3>
+            <p>Smart assistant for predictions.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">🔥 Today's Matches</h2>
+
+    <div class="matches">
+
+        <div class="match-card">
+            <div class="match-top">
+                <span>Premier League</span>
+                <span>Live</span>
+            </div>
+            <div class="teams">
+                <span>Liverpool</span>
+                <span class="score">2 - 1</span>
+                <span>Chelsea</span>
+            </div>
+        </div>
+
+        <div class="match-card">
+            <div class="match-top">
+                <span>La Liga</span>
+                <span>Live</span>
+            </div>
+            <div class="teams">
+                <span>Barcelona</span>
+                <span class="score">3 - 0</span>
+                <span>Valencia</span>
+            </div>
+        </div>
+
+        <div class="match-card">
+            <div class="match-top">
+                <span>Egypt League</span>
+                <span>8:00 PM</span>
+            </div>
+            <div class="teams">
+                <span>Al Ahly</span>
+                <span class="score">VS</span>
+                <span>Pyramids</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div class="footer">
+    Football 276 © 2026 | Built with 🔥 Passion
+</div>
+
+<div class="lowerbar">
+    <a href="Home.html">Home</a>
+    <a href="News.html">News</a>
+    <a href="Dowriat.html">Leagues</a>
+    <a href="AI.html">AI</a>
+    <a href="Settings.html">Settings</a>
+</div>
+
+</body>
+</html>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9792136816198268"
+     crossorigin="anonymous"></script>
